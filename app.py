@@ -69,10 +69,32 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id')
+
     logout_user()
     flash("Goodbye!")
     return redirect('/')
+
+@app.route('/secret')
+@login_required
+def secret():
+    liked_show_ids = [like.show_id for like in Like.query.filter_by(user_id=current_user.id).all()]
+    liked_shows = []
+
+    for show_id in liked_show_ids:
+        response = requests.get(f'https://api.tvmaze.com/shows/{show_id}')
+        if response.status_code == 200:
+            show_data = response.json()
+            liked_shows.append({
+                'id': show_data['id'],
+                'name': show_data['name'],
+                'genres': show_data['genres'],
+                'summary': show_data.get('summary', 'No summary available'),
+                'image_url': show_data['image']['medium'] if show_data.get('image') else None
+            })
+
+    return render_template('secret.html', shows=liked_shows)
+
+
 
 @app.route('/shows', methods=['GET'])
 def fetch_shows():
@@ -165,7 +187,7 @@ def favorite_show(show_id):
         db.session.add(like)
         db.session.commit()
         flash('Added to favorites', 'success')
-    return redirect(url_for('show_detail', show_id=show_id))
+    return redirect(request.referrer)
 
 @app.route('/list_shows')
 def list_shows():
