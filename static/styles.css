@@ -1,0 +1,47 @@
+body {
+    background-color: #e3f2fd ;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card img {
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.form-inline input[type="search"] {
+    width: 300px;
+}
+
+.form-control, .btn {
+    border-radius: 8px;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+.list-group-item {
+    border-radius: 6px;
+}
+
+footer {
+    margin-top: 40px;
+    padding-top: 10px;
+    font-size: 0.9rem;
+    color: #888;
+    text-align: center;
+}
